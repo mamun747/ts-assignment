@@ -112,6 +112,16 @@ function App() {
                           >
                             <AiOutlineDelete />
                           </button>
+                          <button
+                            className="ml-4 text-blue-400"
+                            onClick={() => handleComplete(value.id)}
+                          >
+                            {value.completed ? (
+                              <IoMdCheckmarkCircle />
+                            ) : (
+                              <IoMdCheckmarkCircleOutline />
+                            )}
+                          </button>
                         </div>
                       </>
                       )
