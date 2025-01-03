@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css"; // Import the toast styles
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
@@ -18,7 +18,11 @@ function App() {
   const [newInput, setNewInput] = useState("");
   const [editingId, setEditingId] = useState<number | null>();
   const [editingText, setEditingText] = useState<string>("");
-
+  useEffect(() => {
+    if(input.length > 0){
+      localStorage.setItem("task", JSON.stringify(input));
+    }
+  }, [input]);
   // Add a new Task
   const handleClick = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,10 +33,12 @@ function App() {
     });
     setNewInput("");
   };
+  // Edit a task
   const handleEdit = (e: value) => {
     setEditingId(e.id);
     setEditingText(e.text);
   };
+  // Update Event
   const handleUpdate = (e: React.FormEvent<HTMLFormElement>, id: number) => {
     e.preventDefault();
     const trimmedValue = editingText.trim();
@@ -48,10 +54,12 @@ function App() {
     setEditingId(null);
     setEditingText("");
   };
+  // Cancel Event
   const handleCancel = () => {
     setEditingId(null);
     setEditingText("");
   };
+  // Delete Event
   const handleDelete = (id: number) => {
     setInput(input.filter((task) => task.id !== id));
     toast.error("You deleted a task.", {
@@ -61,6 +69,7 @@ function App() {
       position: "top-center",
     });
   };
+  // MarkAsCompleted Event
   const handleComplete = (id: number) => {
     setInput(
       input.map((element) =>
