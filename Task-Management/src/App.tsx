@@ -108,7 +108,7 @@ function App() {
                           </button>
                           <button
                             onClick={() => handleDelete(value.id)}
-                            className="ml-4 text-blue-400"
+                            className="ml-4 text-red-400"
                           >
                             <AiOutlineDelete />
                           </button>
