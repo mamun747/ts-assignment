@@ -26,6 +26,19 @@ function App() {
     });
     setNewInput("");
   };
+  const handleEdit = (e: value) => {
+    setEditingId(e.id);
+    setEditingText(e.text);
+  };
+  const handleUpdate = (e: React.FormEvent<HTMLFormElement>, id: number) => {
+    e.preventDefault();
+    const trimmedValue = editingText.trim();
+    setInput(
+      input.map(task => 
+        task.id === id ? {...task, text: trimmedValue} : task
+      )
+    );
+  };
   return (
     <>
 
