@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-// import "react-toastify/dist/ReactToastify.css"; // Import the toast styles
+import "react-toastify/dist/ReactToastify.css"; // Import the toast styles
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import {
   IoMdCheckmarkCircle,
   IoMdCheckmarkCircleOutline,
 } from "react-icons/io";
-// import { toast, ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 interface value {
   id: number;
@@ -24,9 +24,9 @@ function App() {
     e.preventDefault();
     const value = newInput.trim();
     setInput([...input, { id: Date.now(), text: value, completed: false }]);
-    // toast.success("You successfully added a task! Let complete it!", {
-    //   position: "top-center",
-    // });
+    toast.success("You successfully added a task! Let complete it!", {
+      position: "top-center",
+    });
     setNewInput("");
   };
   const handleEdit = (e: value) => {
@@ -36,14 +36,17 @@ function App() {
   const handleUpdate = (e: React.FormEvent<HTMLFormElement>, id: number) => {
     e.preventDefault();
     const trimmedValue = editingText.trim();
+    if (!trimmedValue) return;
     setInput(
       input.map((task) =>
         task.id === id ? { ...task, text: trimmedValue } : task
       )
     );
+    toast.success("You edited your task.", {
+      position: "top-center",
+    });
     setEditingId(null);
     setEditingText("");
-    
   };
   const handleCancel = () => {
     setEditingId(null);
@@ -51,6 +54,12 @@ function App() {
   };
   const handleDelete = (id: number) => {
     setInput(input.filter((task) => task.id !== id));
+    toast.error("You deleted a task.", {
+      style: {
+        color: "red",
+      },
+      position: "top-center",
+    });
   };
   const handleComplete = (id: number) => {
     setInput(
@@ -160,6 +169,7 @@ function App() {
           )}
         </div>
       </div>
+      <ToastContainer/>
     </>
   );
 }
