@@ -15,6 +15,17 @@ function App() {
   const [newInput, setNewInput] = useState("");
   const [editingId, setEditingId] = useState<number | null>();
   const [editingText, setEditingText] = useState<string>("");
+
+  // Add a new Task
+  const handleClick = (e: React.FormEvent) => {
+    e.preventDefault();
+    const value = newInput.trim();
+    setInput([...input, { id: Date.now(), text: value, completed: false }]);
+    toast.success("You successfully added a task! Let complete it!", {
+      position: "top-center",
+    });
+    setNewInput("");
+  };
   return (
     <>
 
