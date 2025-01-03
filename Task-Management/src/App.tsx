@@ -23,6 +23,12 @@ function App() {
       localStorage.setItem("task", JSON.stringify(input));
     }
   }, [input]);
+  useEffect(() => {
+    const data = localStorage.getItem("task");
+    if(data){
+      setInput(JSON.parse(data));
+    }
+  }, [])
   // Add a new Task
   const handleClick = (e: React.FormEvent) => {
     e.preventDefault();
