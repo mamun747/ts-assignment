@@ -39,6 +39,18 @@ function App() {
       )
     );
   };
+  const handleCancel = () => {
+    setEditingId(null);
+    setEditingText("");
+  };
+  const handleDelete = (id: number) => {
+    setInput(input.filter(task => task.id !== id));
+  };
+  const handleComplete = (id: number) => {
+    setInput(
+      input.map(element => element.id === id ? {...element, completed: !element.completed} : element)
+    );
+  };
   return (
     <>
 
