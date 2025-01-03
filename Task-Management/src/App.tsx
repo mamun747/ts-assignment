@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 // import "react-toastify/dist/ReactToastify.css"; // Import the toast styles
-// import { AiOutlineDelete } from "react-icons/ai";
-// import { FaRegEdit } from "react-icons/fa";
-// import { IoMdCheckmarkCircle, IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { AiOutlineDelete } from "react-icons/ai";
+import { FaRegEdit } from "react-icons/fa";
+import { IoMdCheckmarkCircle, IoMdCheckmarkCircleOutline } from "react-icons/io";
 // import { toast, ToastContainer } from "react-toastify";
 
 interface value {
@@ -58,9 +58,63 @@ function App() {
         <input type="text" value={newInput} onChange={(e) => setNewInput(e.target.value)} className="mx-auto border rounded-xl p-2 w-[500px] outline-none" autoFocus/>
         <button onClick={handleClick} disabled={!newInput.trim()} className="p-2 bg-purple-400/50 rounded-lg ms-2 font-bold disabled:cursor-not-allowed disabled:opacity-50">ADD</button>
         {
-          input.map(value => (
-            <p key={value.id}>{value.text}</p>
-          ))
+          input.length === 0 ? (
+            <p className="text-center pt-8 text-gray-500">
+              Track your work shedule!
+            </p>
+          ) : (
+            <ul className="mt-6 bg-gray-200 shadow-lg p-3 rounded-lg">
+              {
+                input.map(value => (
+                  <li className="flex items-center justify-between py-2 text-slate-950 text-lg border-b border-gray-300 last:border-b-0">
+                    <div className="flex items-center gap-4">
+                      <span className={`${value.completed ? "line-through text-gray-500 bg-green-200 p-1 rounded-lg" : ""}`}>{value.text.toUpperCase()}</span>
+                    </div>
+                    {
+                      editingId === value.id ? (
+                        <form
+                        onSubmit={(e) => handleUpdate(e, value.id)}
+                        className="flex items-center w-full"
+                      >
+                        <input
+                          type="text"
+                          value={editingText}
+                          onChange={(e) => setEditingText(e.target.value)}
+                          className="flex-1 border rounded-xl p-1 outline-none mr-2"
+                          autoFocus
+                        />
+                        <button
+                          type="submit"
+                          className="bg-green-400 px-2 py-1 rounded-lg font-bold text-white"
+                        >
+                          Save
+                        </button>
+                        <button
+                          type="button"
+                          className="bg-red-400 px-2 py-1 rounded-lg font-bold text-white"
+                          onClick={handleCancel}
+                        >
+                          Cancel
+                        </button>
+                        </form>
+                      ) : (
+                        <>
+                        <div className="flex items-center gap-4">
+                          <button
+                            onClick={() => handleEdit(value)}
+                            className="ml-4 text-blue-400"
+                          >
+                            <FaRegEdit />
+                          </button>
+                        </div>
+                      </>
+                      )
+                    }
+                </li>
+                ))
+              }
+            </ul>
+          )
         }
       </div>
     </div>
