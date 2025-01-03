@@ -106,6 +106,12 @@ function App() {
                           >
                             <FaRegEdit />
                           </button>
+                          <button
+                            onClick={() => handleDelete(value.id)}
+                            className="ml-4 text-blue-400"
+                          >
+                            <AiOutlineDelete />
+                          </button>
                         </div>
                       </>
                       )
